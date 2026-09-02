@@ -1,0 +1,41 @@
+{
+  "syntheticMetadata": {
+    "label": "SYNTHETIC DEMONSTRATION DATA ONLY",
+    "customerId": "1000000001",
+    "key": "example-heating",
+    "businessName": "Example Heating",
+    "timeZone": "America/New_York"
+  },
+  "result": {
+    "columns": [
+      "localServicesLead.id",
+      "localServicesLead.leadType",
+      "localServicesLeadConversation.participantType",
+      "localServicesLeadConversation.conversationChannel",
+      "localServicesLeadConversation.phoneCallDetails.callDurationMillis",
+      "localServicesLeadConversation.eventDateTime",
+      "localServicesLeadConversation.messageDetails.text"
+    ],
+    "data": [
+      ["900000000001", "MESSAGE", "CONSUMER", "SMS", null, "2026-01-05 09:00:00.000000", "SYNTHETIC MESSAGE: request alpha"],
+      ["900000000001", "MESSAGE", "ADVERTISER", "SMS", null, "2026-01-05 09:00:45.123456", "SYNTHETIC MESSAGE: reply alpha"],
+      ["900000000002", "MESSAGE", "CONSUMER", "SMS", null, "2026-01-06 10:00:00", "SYNTHETIC MESSAGE: request beta"],
+      ["900000000002", "MESSAGE", "ADVERTISER", "PHONE_CALL", null, "2026-01-06 10:10:00", "SYNTHETIC MESSAGE: callback reply beta"],
+      ["900000000003", "MESSAGE", "CONSUMER", "SMS", null, "2026-01-07 11:00:00", "SYNTHETIC MESSAGE: request gamma"],
+      ["900000000003", "MESSAGE", "ADVERTISER", "SMS", null, "2026-01-07 13:00:00", "SYNTHETIC MESSAGE: reply gamma"],
+      ["900000000004", "MESSAGE", "CONSUMER", "SMS", null, "2026-01-08 08:00:00", "SYNTHETIC MESSAGE: request delta"],
+      ["900000000004", "MESSAGE", "ADVERTISER", "SMS", null, "2026-01-09 10:00:00", "SYNTHETIC MESSAGE: reply delta"],
+      ["900000000005", "MESSAGE", "CONSUMER", "SMS", null, "2026-01-30 09:00:00", "SYNTHETIC MESSAGE: recent unanswered epsilon"],
+      ["900000000006", "MESSAGE", "CONSUMER", "SMS", null, "2026-01-10 09:00:00", "SYNTHETIC MESSAGE: old unanswered zeta"],
+      ["900000000007", "MESSAGE", "ADVERTISER", "SMS", null, "2026-01-11 12:00:00", "SYNTHETIC MESSAGE: advertiser-only eta"],
+      ["900000000008", "PHONE_CALL", "CONSUMER", "PHONE_CALL", 0, "2026-01-12 09:00:00", null],
+      ["900000000009", "PHONE_CALL", "CONSUMER", "PHONE_CALL", 1000, "2026-01-13 09:00:00", null],
+      ["900000000010", "PHONE_CALL", "CONSUMER", "PHONE_CALL", 1001, "2026-01-14 09:00:00", null],
+      ["900000000011", "PHONE_CALL", "CONSUMER", "PHONE_CALL", 45000, "2026-01-15 09:00:00", null],
+      ["900000000012", "PHONE_CALL", "CONSUMER", "PHONE_CALL", 0, "2026-01-16 09:00:00", null],
+      ["900000000012", "PHONE_CALL", "ADVERTISER", "PHONE_CALL", null, "2026-01-16 09:00:05", null],
+      ["900000000013", "BOOKING", "CONSUMER", "BOOKING", null, "2026-01-17 09:00:00", null],
+      ["900000000014", "OTHER_SYNTHETIC", "CONSUMER", "OTHER_SYNTHETIC", null, "2026-01-18 09:00:00", null]
+    ]
+  }
+}

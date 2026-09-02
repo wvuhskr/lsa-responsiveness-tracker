@@ -1,0 +1,13 @@
+{
+  "syntheticMetadata": {
+    "label": "SYNTHETIC FIXTURE ONLY",
+    "customerId": "1000000002",
+    "key": "example-plumbing",
+    "businessName": "Example Plumbing",
+    "timeZone": "America/New_York"
+  },
+  "unsupportedResource": {
+    "label": "SYNTHETIC UNSUPPORTED RESOURCE DETAIL",
+    "rows": []
+  }
+}

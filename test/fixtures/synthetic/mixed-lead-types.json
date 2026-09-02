@@ -1,0 +1,24 @@
+{
+  "syntheticMetadata": {
+    "label": "SYNTHETIC FIXTURE ONLY",
+    "customerId": "1000000002",
+    "key": "example-plumbing",
+    "businessName": "Example Plumbing",
+    "timeZone": "America/New_York"
+  },
+  "result": {
+    "columns": [
+      "localServicesLead.id",
+      "localServicesLead.leadType",
+      "localServicesLeadConversation.participantType",
+      "localServicesLeadConversation.conversationChannel",
+      "localServicesLeadConversation.phoneCallDetails.callDurationMillis",
+      "localServicesLeadConversation.eventDateTime",
+      "localServicesLeadConversation.messageDetails.text"
+    ],
+    "data": [
+      ["900000000099", "MESSAGE", "CONSUMER", "SMS", null, "2026-01-20 09:00:00", "SYNTHETIC MESSAGE: conflicting lead marker"],
+      ["900000000099", "PHONE_CALL", "CONSUMER", "PHONE_CALL", 1001, "2026-01-20 09:01:00", null]
+    ]
+  }
+}

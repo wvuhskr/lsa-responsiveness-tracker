@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "asOf": "2026-01-31T12:00:00-05:00",
+  "windowDays": 30,
+  "accounts": [
+    {
+      "key": "example-heating",
+      "name": "Example Heating",
+      "customerId": "1000000001",
+      "timeZone": "America/New_York",
+      "inputManifest": "./input-manifest.example.json"
+    }
+  ],
+  "privacy": {
+    "includeLeadIds": false,
+    "includeMessageText": false
+  },
+  "history": {
+    "enabled": false
+  }
+}

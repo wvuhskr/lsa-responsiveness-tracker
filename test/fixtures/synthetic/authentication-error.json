@@ -1,0 +1,13 @@
+{
+  "syntheticMetadata": {
+    "label": "SYNTHETIC FIXTURE ONLY",
+    "customerId": "1000000002",
+    "key": "example-plumbing",
+    "businessName": "Example Plumbing",
+    "timeZone": "America/New_York"
+  },
+  "error": {
+    "code": 401,
+    "message": "SYNTHETIC AUTHENTICATION FAILURE DETAIL"
+  }
+}

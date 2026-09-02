@@ -1,0 +1,22 @@
+{
+  "columns": [
+    "local_services_lead.id",
+    "local_services_lead.lead_type",
+    "local_services_lead_conversation.participant_type",
+    "local_services_lead_conversation.conversation_channel",
+    "local_services_lead_conversation.phone_call_details.call_duration_millis",
+    "local_services_lead_conversation.event_date_time",
+    "local_services_lead_conversation.message_details.text"
+  ],
+  "data": [
+    [
+      "SYNTHETIC-PAGE-LEAD-0002",
+      "synthetic_booking",
+      "advertiser",
+      "booking",
+      0,
+      "2026-01-11T00:00:00Z",
+      null
+    ]
+  ]
+}

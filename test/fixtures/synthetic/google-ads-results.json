@@ -1,0 +1,35 @@
+{
+  "results": [
+    {
+      "localServicesLead": {
+        "id": "SYNTHETIC-OBJECT-LEAD-0001",
+        "leadType": "message"
+      },
+      "localServicesLeadConversation": {
+        "participantType": "consumer",
+        "conversationChannel": "sms",
+        "phoneCallDetails": {
+          "callDurationMillis": null
+        },
+        "eventDateTime": "2026-01-10T12:00:00.123456Z",
+        "messageDetails": {
+          "text": "SYNTHETIC PRIVATE MESSAGE FOR TESTING ONLY"
+        }
+      }
+    },
+    {
+      "localServicesLead": {
+        "id": "SYNTHETIC-OBJECT-LEAD-0002",
+        "leadType": "booking"
+      },
+      "localServicesLeadConversation": {
+        "participantType": "advertiser",
+        "conversationChannel": "phone_call",
+        "phoneCallDetails": {
+          "callDurationMillis": 0
+        },
+        "eventDateTime": "2026-01-10T12:00:01Z"
+      }
+    }
+  ]
+}

@@ -1,0 +1,193 @@
+{
+  "syntheticMetadata": {
+    "label": "SYNTHETIC FIXTURE ONLY",
+    "customerId": "1000000001",
+    "key": "example-heating",
+    "businessName": "Example Heating",
+    "timeZone": "America/New_York"
+  },
+  "results": [
+    {
+      "localServicesLead": { "id": "900000000001", "leadType": "message" },
+      "localServicesLeadConversation": {
+        "participantType": "consumer",
+        "conversationChannel": "sms",
+        "phoneCallDetails": { "callDurationMillis": null },
+        "eventDateTime": "2026-01-05 09:00:00.000000",
+        "messageDetails": { "text": "SYNTHETIC MESSAGE: request alpha" }
+      }
+    },
+    {
+      "localServicesLead": { "id": "900000000001", "leadType": "message" },
+      "localServicesLeadConversation": {
+        "participantType": "advertiser",
+        "conversationChannel": "sms",
+        "phoneCallDetails": { "callDurationMillis": null },
+        "eventDateTime": "2026-01-05 09:00:45.123456",
+        "messageDetails": { "text": "SYNTHETIC MESSAGE: reply alpha" }
+      }
+    },
+    {
+      "localServicesLead": { "id": "900000000002", "leadType": "message" },
+      "localServicesLeadConversation": {
+        "participantType": "consumer",
+        "conversationChannel": "sms",
+        "phoneCallDetails": { "callDurationMillis": null },
+        "eventDateTime": "2026-01-06 10:00:00",
+        "messageDetails": { "text": "SYNTHETIC MESSAGE: request beta" }
+      }
+    },
+    {
+      "localServicesLead": { "id": "900000000002", "leadType": "message" },
+      "localServicesLeadConversation": {
+        "participantType": "advertiser",
+        "conversationChannel": "phone_call",
+        "phoneCallDetails": { "callDurationMillis": null },
+        "eventDateTime": "2026-01-06 10:10:00",
+        "messageDetails": { "text": "SYNTHETIC MESSAGE: callback reply beta" }
+      }
+    },
+    {
+      "localServicesLead": { "id": "900000000003", "leadType": "message" },
+      "localServicesLeadConversation": {
+        "participantType": "consumer",
+        "conversationChannel": "sms",
+        "phoneCallDetails": { "callDurationMillis": null },
+        "eventDateTime": "2026-01-07 11:00:00",
+        "messageDetails": { "text": "SYNTHETIC MESSAGE: request gamma" }
+      }
+    },
+    {
+      "localServicesLead": { "id": "900000000003", "leadType": "message" },
+      "localServicesLeadConversation": {
+        "participantType": "advertiser",
+        "conversationChannel": "sms",
+        "phoneCallDetails": { "callDurationMillis": null },
+        "eventDateTime": "2026-01-07 13:00:00",
+        "messageDetails": { "text": "SYNTHETIC MESSAGE: reply gamma" }
+      }
+    },
+    {
+      "localServicesLead": { "id": "900000000004", "leadType": "message" },
+      "localServicesLeadConversation": {
+        "participantType": "consumer",
+        "conversationChannel": "sms",
+        "phoneCallDetails": { "callDurationMillis": null },
+        "eventDateTime": "2026-01-08 08:00:00",
+        "messageDetails": { "text": "SYNTHETIC MESSAGE: request delta" }
+      }
+    },
+    {
+      "localServicesLead": { "id": "900000000004", "leadType": "message" },
+      "localServicesLeadConversation": {
+        "participantType": "advertiser",
+        "conversationChannel": "sms",
+        "phoneCallDetails": { "callDurationMillis": null },
+        "eventDateTime": "2026-01-09 10:00:00",
+        "messageDetails": { "text": "SYNTHETIC MESSAGE: reply delta" }
+      }
+    },
+    {
+      "localServicesLead": { "id": "900000000005", "leadType": "message" },
+      "localServicesLeadConversation": {
+        "participantType": "consumer",
+        "conversationChannel": "sms",
+        "phoneCallDetails": { "callDurationMillis": null },
+        "eventDateTime": "2026-01-30 09:00:00",
+        "messageDetails": { "text": "SYNTHETIC MESSAGE: recent unanswered epsilon" }
+      }
+    },
+    {
+      "localServicesLead": { "id": "900000000006", "leadType": "message" },
+      "localServicesLeadConversation": {
+        "participantType": "consumer",
+        "conversationChannel": "sms",
+        "phoneCallDetails": { "callDurationMillis": null },
+        "eventDateTime": "2026-01-10 09:00:00",
+        "messageDetails": { "text": "SYNTHETIC MESSAGE: old unanswered zeta" }
+      }
+    },
+    {
+      "localServicesLead": { "id": "900000000007", "leadType": "message" },
+      "localServicesLeadConversation": {
+        "participantType": "advertiser",
+        "conversationChannel": "sms",
+        "phoneCallDetails": { "callDurationMillis": null },
+        "eventDateTime": "2026-01-11 12:00:00",
+        "messageDetails": { "text": "SYNTHETIC MESSAGE: advertiser-only eta" }
+      }
+    },
+    {
+      "localServicesLead": { "id": "900000000008", "leadType": "phone_call" },
+      "localServicesLeadConversation": {
+        "participantType": "consumer",
+        "conversationChannel": "phone_call",
+        "phoneCallDetails": { "callDurationMillis": 0 },
+        "eventDateTime": "2026-01-12 09:00:00"
+      }
+    },
+    {
+      "localServicesLead": { "id": "900000000009", "leadType": "phone_call" },
+      "localServicesLeadConversation": {
+        "participantType": "consumer",
+        "conversationChannel": "phone_call",
+        "phoneCallDetails": { "callDurationMillis": 1000 },
+        "eventDateTime": "2026-01-13 09:00:00"
+      }
+    },
+    {
+      "localServicesLead": { "id": "900000000010", "leadType": "phone_call" },
+      "localServicesLeadConversation": {
+        "participantType": "consumer",
+        "conversationChannel": "phone_call",
+        "phoneCallDetails": { "callDurationMillis": 1001 },
+        "eventDateTime": "2026-01-14 09:00:00"
+      }
+    },
+    {
+      "localServicesLead": { "id": "900000000011", "leadType": "phone_call" },
+      "localServicesLeadConversation": {
+        "participantType": "consumer",
+        "conversationChannel": "phone_call",
+        "phoneCallDetails": { "callDurationMillis": 45000 },
+        "eventDateTime": "2026-01-15 09:00:00"
+      }
+    },
+    {
+      "localServicesLead": { "id": "900000000012", "leadType": "phone_call" },
+      "localServicesLeadConversation": {
+        "participantType": "consumer",
+        "conversationChannel": "phone_call",
+        "phoneCallDetails": { "callDurationMillis": 0 },
+        "eventDateTime": "2026-01-16 09:00:00"
+      }
+    },
+    {
+      "localServicesLead": { "id": "900000000012", "leadType": "phone_call" },
+      "localServicesLeadConversation": {
+        "participantType": "advertiser",
+        "conversationChannel": "phone_call",
+        "phoneCallDetails": { "callDurationMillis": null },
+        "eventDateTime": "2026-01-16 09:00:05"
+      }
+    },
+    {
+      "localServicesLead": { "id": "900000000013", "leadType": "booking" },
+      "localServicesLeadConversation": {
+        "participantType": "consumer",
+        "conversationChannel": "booking",
+        "phoneCallDetails": { "callDurationMillis": null },
+        "eventDateTime": "2026-01-17 09:00:00"
+      }
+    },
+    {
+      "localServicesLead": { "id": "900000000014", "leadType": "other_synthetic" },
+      "localServicesLeadConversation": {
+        "participantType": "consumer",
+        "conversationChannel": "other_synthetic",
+        "phoneCallDetails": { "callDurationMillis": null },
+        "eventDateTime": "2026-01-18 09:00:00"
+      }
+    }
+  ]
+}

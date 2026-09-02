@@ -1,0 +1,48 @@
+{
+  "syntheticMetadata": {
+    "label": "SYNTHETIC FIXTURE ONLY"
+  },
+  "metricVersion": "lsa-responsiveness/v1",
+  "account": {
+    "key": "example-heating",
+    "name": "Example Heating"
+  },
+  "counts": {
+    "repliedMessages": 4,
+    "recentUnansweredMessages": 1,
+    "oldUnansweredMessages": 1,
+    "eligibleMessages": 5,
+    "eligiblePhoneCalls": 5,
+    "connectedCalls": 3,
+    "totalEligible": 10,
+    "totalResponded": 7
+  },
+  "rates": {
+    "totalResponsiveness": 0.7,
+    "callsConnected": 0.6,
+    "messagesReplied": 0.8,
+    "repliedWithin24Hours": 0.6
+  },
+  "replySpeed": {
+    "medianNanoseconds": "3900000000000",
+    "buckets": {
+      "within5m": 1,
+      "within1h": 1,
+      "within24h": 1,
+      "over24h": 1
+    }
+  },
+  "diagnostics": {
+    "incompleteWindowLeads": 1,
+    "excludedLeadTypes": {
+      "BOOKING": 1,
+      "OTHER_SYNTHETIC": 1
+    }
+  },
+  "recentUnanswered": [
+    {
+      "leadId": "900000000005",
+      "firstContactEpochNanoseconds": "1769781600000000000"
+    }
+  ]
+}

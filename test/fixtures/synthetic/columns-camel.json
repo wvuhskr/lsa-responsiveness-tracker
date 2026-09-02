@@ -1,0 +1,12 @@
+{
+  "columns": [
+    "localServicesLead.id",
+    "localServicesLead.leadType",
+    "localServicesLeadConversation.participantType",
+    "localServicesLeadConversation.conversationChannel",
+    "localServicesLeadConversation.phoneCallDetails.callDurationMillis",
+    "localServicesLeadConversation.eventDateTime",
+    "localServicesLeadConversation.messageDetails.text"
+  ],
+  "data": [["SYNTHETIC-LEAD-0001", "MESSAGE", "CONSUMER", "SMS", null, "2026-01-10 12:00:00.123456", "SYNTHETIC-PRIVATE-MESSAGE"]]
+}

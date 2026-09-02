@@ -1,0 +1,10 @@
+{
+  "columns": [
+    "localServicesLead.id",
+    "localServicesLead.leadType",
+    "localServicesLeadConversation.participantType",
+    "localServicesLeadConversation.conversationChannel",
+    "localServicesLeadConversation.phoneCallDetails.callDurationMillis"
+  ],
+  "data": []
+}

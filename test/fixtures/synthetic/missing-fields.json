@@ -1,0 +1,21 @@
+{
+  "syntheticMetadata": {
+    "label": "SYNTHETIC FIXTURE ONLY",
+    "customerId": "1000000002",
+    "key": "example-plumbing",
+    "businessName": "Example Plumbing",
+    "timeZone": "America/New_York"
+  },
+  "result": {
+    "columns": [
+      "localServicesLead.id",
+      "localServicesLead.leadType",
+      "localServicesLeadConversation.participantType",
+      "localServicesLeadConversation.conversationChannel",
+      "localServicesLeadConversation.phoneCallDetails.callDurationMillis",
+      "SYNTHETIC_UNSUPPORTED_FIELD",
+      "localServicesLeadConversation.messageDetails.text"
+    ],
+    "data": []
+  }
+}

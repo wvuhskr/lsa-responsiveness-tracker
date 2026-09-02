@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "format": "columns-data",
+  "completion": {
+    "method": "all-page-tokens-consumed"
+  },
+  "pages": [
+    {
+      "path": "page-1.json",
+      "requestToken": null,
+      "nextPageToken": "SYNTHETIC-PAGE-2-TOKEN"
+    },
+    {
+      "path": "page-2.json",
+      "requestToken": "SYNTHETIC-PAGE-2-TOKEN",
+      "nextPageToken": null
+    }
+  ]
+}

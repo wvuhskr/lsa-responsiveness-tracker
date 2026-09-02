@@ -1,0 +1,50 @@
+{
+  "name": "lsa-responsiveness-tracker",
+  "version": "1.0.0",
+  "description": "Generate private, auditable Local Services Ads responsiveness reports from complete Google Ads conversation data.",
+  "keywords": [
+    "google-ads",
+    "local-services-ads",
+    "lsa",
+    "gaql",
+    "paid-media",
+    "marketing-analytics",
+    "agent-skills",
+    "mcp",
+    "reporting",
+    "privacy"
+  ],
+  "author": "Alex Murtha",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wvuhskr/lsa-responsiveness-tracker.git"
+  },
+  "homepage": "https://github.com/wvuhskr/lsa-responsiveness-tracker#readme",
+  "bugs": {
+    "url": "https://github.com/wvuhskr/lsa-responsiveness-tracker/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "lsa-responsiveness": "./bin/lsa-responsiveness.js",
+    "lsa-responsiveness-install-skill": "./scripts/install-skill.mjs"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    ".agents/",
+    "docs/",
+    "examples/",
+    "CHANGELOG.md",
+    "LICENSE",
+    "SECURITY.md",
+    "scripts/install-skill.mjs",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node --test"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "result": {
+    "columns": [
+      "localServicesLead.id",
+      "localServicesLead.leadType",
+      "localServicesLeadConversation.participantType",
+      "localServicesLeadConversation.conversationChannel",
+      "localServicesLeadConversation.phoneCallDetails.callDurationMillis",
+      "localServicesLeadConversation.eventDateTime",
+      "localServicesLeadConversation.messageDetails.text"
+    ],
+    "data": [
+      [
+        "SYNTHETIC-PAGE-LEAD-0001",
+        "message",
+        "consumer",
+        "sms",
+        null,
+        "2026-01-10 12:00:00.123456",
+        "SYNTHETIC PAGINATED MESSAGE FOR TESTING ONLY"
+      ]
+    ]
+  }
+}

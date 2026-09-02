@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "format": "columns-data",
+  "completion": {
+    "method": "single-page-no-continuation"
+  },
+  "pages": [
+    {
+      "path": "synthetic-connector-response.json",
+      "requestToken": null,
+      "nextPageToken": null
+    }
+  ]
+}
