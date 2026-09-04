@@ -91,7 +91,7 @@ async function assertReceipt(destination) {
   ]);
   assert.equal(receipt.schemaVersion, 1);
   assert.equal(receipt.product, "lsa-responsiveness-tracker");
-  assert.equal(receipt.version, "1.0.0");
+  assert.equal(receipt.version, "1.0.1");
   assert.equal(path.isAbsolute(receipt.cliEntry), true);
   assert.equal(path.isAbsolute(receipt.sourceSkill), true);
   assert.equal(receipt.sourceSkill, sourceSkill);

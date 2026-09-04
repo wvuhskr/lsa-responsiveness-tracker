@@ -1,5 +1,7 @@
 # LSA Responsiveness Tracker
 
+> **Unofficial, independent project.** LSA Responsiveness Tracker is not affiliated with, endorsed by, or sponsored by Google. References to Google products identify the services this tool works with and do not imply an official relationship. Its metrics are independently calculated and are not Google's official LSA responsiveness score.
+
 See whether your team is actually answering Local Services Ads leads, not just how many leads Google delivered.
 
 LSA reporting can tell a marketer that a call or message arrived. It is much less useful for answering the operational questions that come next: Did the call connect? Did anyone reply to the message? How long did the reply take? Are recent leads still waiting?
@@ -8,7 +10,7 @@ LSA Responsiveness Tracker turns raw Google Ads LSA conversation events into a p
 
 This is a response-time and lead-status proxy, not Google's official LSA responsiveness figure. Google does not publish the exact formula. The tracker makes its own formula explicit so every result can be understood and reproduced.
 
-Current release: `1.0.0`. The documented Node.js 20 and confirmed migrated-account validation gaps remain open and are listed under Known limitations.
+Current release: `1.0.1`. The documented Node.js 20 and confirmed migrated-account validation gaps remain open and are listed under Known limitations.
 
 ## Why marketers use it
 
@@ -40,7 +42,7 @@ The result is a light-mode static HTML report that can be opened locally. Machin
 
 1. A compatible Google Ads connector, whether exposed through Model Context Protocol (MCP) or another tool, runs a raw Google Ads Query Language (GAQL) query for `local_services_lead_conversation`.
 2. The complete row-level response and pagination evidence are saved to private local files.
-3. The Node.js CLI validates the envelope, returned columns, time window, account boundary, and completion manifest before calculating anything.
+3. The Node.js CLI validates the envelope, returned columns, time window, customer evidence, and completion manifest before calculating anything. Returned customer identities must match the configured account; envelopes without them require a private manifest assertion recorded from the actual query request.
 4. The CLI applies the versioned `lsa-responsiveness/v1` calculation rules and writes the report locally.
 
 The CLI is the single calculation authority. The portable Agent Skill can guide data collection and invoke the CLI, but it does not duplicate or improvise the formulas.
@@ -62,7 +64,7 @@ Clone the repository and select the reviewed release:
 ```sh
 git clone https://github.com/wvuhskr/lsa-responsiveness-tracker.git
 cd lsa-responsiveness-tracker
-git checkout v1.0.0
+git checkout v1.0.1
 ```
 
 The CLI has no runtime dependencies, so no package installation is required when running it from the repository. Node.js 20 or newer is required.
@@ -128,11 +130,15 @@ Start with the safe synthetic examples:
 
 Copy the config and manifest into private, untracked storage before replacing any synthetic values. The manifest is the trust boundary between data collection and calculation: it identifies the saved page files, their envelope, and the evidence that collection finished.
 
-Validate a saved response without printing row values, paths, IDs, or lead counts:
+Validate the complete collection without printing row values, paths, IDs, or lead counts:
 
 ```sh
-node ./bin/lsa-responsiveness.js probe --input ./private-input/page-1.json --format auto
+node ./bin/lsa-responsiveness.js probe --config ./private-input/config.json
 ```
+
+Record `source.customerId` from the actual query request in each private manifest. For native Google Ads `results`, also record `source.selectedFields` from the executed SELECT list. All required fields must be selected; this evidence permits legitimate omitted duration values and verified empty periods. Returned customer IDs or resource-name customers are checked on every row and must agree. Evidence is an assertion about collection, not proof against a dishonest connector. See the [connector contract](.agents/skills/lsa-responsiveness-tracker/references/connector-contract.md) for the exact format.
+
+Existing manifests need this evidence unless every row already carries a matching customer identity. Do not guess it from the desired account label. `probe --input` remains available for isolated structural checks, but it rejects pages with continuation tokens and cannot verify native empty results by itself.
 
 Generate the report only after every account has a validated completion manifest:
 
@@ -175,7 +181,7 @@ total responsiveness =
 - A never-replied message counts against the rate only while it is within the configured recent-unanswered window, which defaults to seven days. Older never-replied messages are reported separately and excluded from the rate.
 - Reply-speed buckets show responses within 5 minutes, within 1 hour, within 24 hours, and over 24 hours.
 
-Message timing is precise when the complete required event history is available. Phone connected status is approximate because the Google Ads conversation data does not make every missed inbound call unambiguous.
+Message timing is precise when the complete required event history is available. HTML displays rounded durations in seconds, minutes, hours, and days, and first-contact dates in the account's time zone. JSON and CSV retain exact epoch nanoseconds. Phone connected status is approximate because the Google Ads conversation data does not make every missed inbound call unambiguous.
 
 ## Privacy and safety
 

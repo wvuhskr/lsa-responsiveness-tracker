@@ -16,13 +16,13 @@ Stop if authentication fails, the selected customer is unavailable, required fie
 
 ## 4. Validate saved responses
 
-Run `probe` for each raw response before reporting:
+Create the private config and run a collection probe before reporting:
 
 ```sh
-node "$CLI_ENTRY" probe --input "$PRIVATE_INPUT/page-1.json" --format auto
+node "$CLI_ENTRY" probe --config "$PRIVATE_INPUT/config.json"
 ```
 
-Repeat `--input` to validate several responses together. Probe output contains only structural capability status, not row values, paths, IDs, or lead counts.
+This validates every configured account and its entire manifest chain without writing a report. Record the query customer and selected fields in each manifest's `source` object. A raw `probe --input` is only a standalone structural check: it rejects unresolved continuation tokens and cannot establish capabilities for empty native results or omitted optional values. Probe output contains only capability status, not row values, paths, IDs, or lead counts.
 
 ## 5. Generate the report
 

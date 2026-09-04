@@ -87,7 +87,7 @@ const legacyExactContentDigests = new Map([
   ],
   [
     "pagination/manifest.json",
-    "7342588ed57e835512e846d5a5c5175c1a99dfa26ead903feafcec760e1f60d5"
+    "1916939800353bc0859f9a5113d0928d2ef5f412ce83c902da0a60765b215a2c"
   ],
   [
     "pagination/page-1.json",
@@ -948,6 +948,7 @@ async function ingestFixture(name, { includeMessageText = false } = {}) {
   await writeFile(manifestPath, JSON.stringify({
     schemaVersion: 1,
     format: "auto",
+    source: { customerId: metadata.customerId },
     completion: {
       method: "connector-complete-saved-result",
       savedResultWasComplete: true

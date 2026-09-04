@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { detectEnvelope, probePayload } from "../src/probe.js";
+import { CapabilityError } from "../src/errors.js";
 
 const fixtureRoot = new URL("./fixtures/synthetic/", import.meta.url);
 
@@ -63,15 +64,11 @@ test("rejects Google Ads object-results missing any non-optional nested field", 
   }
 });
 
-test("supports an object result with an absent per-row duration path", () => {
+test("does not claim duration capability without selection evidence", () => {
   const objectResult = googleAdsResult();
   delete objectResult.localServicesLeadConversation.phoneCallDetails;
 
-  const result = probePayload({ results: [objectResult] });
-  assert.equal(result.supported, true);
-  assert.equal(result.envelope, "google-ads-results");
-  assert.equal(result.requiredFields.callDurationMillis, true);
-  assert.equal(result.requiredFields.messageText, true);
+  assert.throws(() => probePayload({ results: [objectResult] }), CapabilityError);
 });
 
 test("reports observed message-text availability independently of request mode", async () => {

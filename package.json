@@ -1,6 +1,6 @@
 {
   "name": "lsa-responsiveness-tracker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Generate private, auditable Local Services Ads responsiveness reports from complete Google Ads conversation data.",
   "keywords": [
     "google-ads",

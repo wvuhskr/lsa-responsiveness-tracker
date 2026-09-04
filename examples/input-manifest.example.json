@@ -1,6 +1,7 @@
 {
   "schemaVersion": 1,
   "format": "columns-data",
+  "source": { "customerId": "1000000001" },
   "completion": {
     "method": "single-page-no-continuation"
   },

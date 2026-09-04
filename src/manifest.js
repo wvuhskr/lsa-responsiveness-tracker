@@ -11,7 +11,7 @@ const COMPLETION_METHODS = new Set([
   "connector-complete-saved-result"
 ]);
 const FORMATS = new Set(["auto", "columns-data", "google-ads-results"]);
-const MANIFEST_KEYS = new Set(["schemaVersion", "format", "completion", "pages"]);
+const MANIFEST_KEYS = new Set(["schemaVersion", "format", "completion", "pages", "source"]);
 const TOKEN_PAGE_KEYS = new Set(["path", "requestToken", "nextPageToken"]);
 const SAVED_RESULT_PAGE_KEYS = new Set(["path"]);
 const VALIDATED_PAGE_CONTENTS = new WeakMap();
@@ -201,6 +201,16 @@ export async function loadManifest(manifestPath) {
   if (!hasOnlyKeys(raw, MANIFEST_KEYS)) fail("Manifest fields are invalid.");
   if (raw.schemaVersion !== 1) fail("Manifest has an unsupported schema version.");
   if (!FORMATS.has(raw.format)) fail("Manifest has an unsupported format.");
+  if (raw.source !== undefined && (!isRecord(raw.source) ||
+      !hasOnlyKeys(raw.source, new Set(["customerId", "selectedFields"])) ||
+      !/^\d{10}$/.test(raw.source.customerId ?? "") ||
+      typeof raw.source.customerId !== "string" ||
+      (raw.source.selectedFields !== undefined &&
+        (!Array.isArray(raw.source.selectedFields) ||
+         !raw.source.selectedFields.every((field) => typeof field === "string") ||
+         new Set(raw.source.selectedFields).size !== raw.source.selectedFields.length)))) {
+    fail("Manifest source evidence is invalid.");
+  }
   if (!isRecord(raw.completion) ||
       !COMPLETION_METHODS.has(raw.completion.method)) {
     fail("Manifest completion method is invalid.");
@@ -224,6 +234,7 @@ export async function loadManifest(manifestPath) {
     schemaVersion: 1,
     format: raw.format,
     completion: { ...raw.completion },
+    ...(raw.source === undefined ? {} : { source: raw.source }),
     pages
   };
 }

@@ -82,6 +82,7 @@ async function writeAccount(root, {
   await writeFile(path.join(directory, "manifest.json"), `${JSON.stringify({
     schemaVersion: 1,
     format,
+    source: { customerId },
     completion,
     pages: [{ path: "page.json" }]
   }, null, 2)}\n`, { mode: 0o600 });

@@ -1,5 +1,6 @@
 {
   "schemaVersion": 1,
+  "source": { "customerId": "1000000001" },
   "format": "columns-data",
   "completion": {
     "method": "all-page-tokens-consumed"

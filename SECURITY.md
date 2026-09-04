@@ -2,7 +2,7 @@
 
 ## Supported version
 
-Security fixes are evaluated for the latest published release. The current supported release is `1.0.0`.
+Security fixes are evaluated for the latest published release. The current supported release is `1.0.1`.
 
 ## Report a vulnerability privately
 

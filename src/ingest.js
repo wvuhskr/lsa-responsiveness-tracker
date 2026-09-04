@@ -149,6 +149,13 @@ function enumValue(value, field, pageNumber, rowNumber) {
 
 function normalizedDuration(value, pageNumber, rowNumber) {
   if (value === null) return null;
+  if (typeof value === "string" && /^\d+$/.test(value)) {
+    const integer = BigInt(value);
+    if (integer > BigInt(Number.MAX_SAFE_INTEGER)) {
+      pageFailure(pageNumber, "invalid call duration", rowNumber);
+    }
+    return Number(integer);
+  }
   if (!Number.isSafeInteger(value) || value < 0) {
     pageFailure(pageNumber, "invalid call duration", rowNumber);
   }
@@ -269,7 +276,8 @@ function normalizeColumnsData(payload, account, options, asOf, pageNumber) {
 }
 
 function normalizeGoogleAdsResults(payload, account, options, asOf, pageNumber) {
-  if (!Array.isArray(payload.results) || payload.results.length === 0) {
+  if (!Array.isArray(payload.results) ||
+      (payload.results.length === 0 && !options.selectedColumns)) {
     capabilityFailure(pageNumber, "Google Ads results cannot establish capabilities");
   }
 
@@ -281,7 +289,7 @@ function normalizeGoogleAdsResults(payload, account, options, asOf, pageNumber) 
     }
   }
 
-  const messageTextAvailable = payload.results.some((result) =>
+  const messageTextAvailable = options.selectedColumns?.messageText != null || payload.results.some((result) =>
     hasOwnPath(result, OBJECT_PATHS.messageText));
   if (options.includeMessageText && !messageTextAvailable) {
     capabilityFailure(pageNumber, "message-text capability is unavailable");
@@ -289,20 +297,57 @@ function normalizeGoogleAdsResults(payload, account, options, asOf, pageNumber) 
 
   return {
     messageTextAvailable,
-    events: payload.results.map((result, index) => normalizeEvent({
-      leadId: valueAtPath(result, OBJECT_PATHS.leadId),
-      leadType: valueAtPath(result, OBJECT_PATHS.leadType),
-      participantType: valueAtPath(result, OBJECT_PATHS.participantType),
-      conversationChannel: valueAtPath(result, OBJECT_PATHS.conversationChannel),
-      callDurationMillis: hasOwnPath(result, OBJECT_PATHS.callDurationMillis)
-        ? valueAtPath(result, OBJECT_PATHS.callDurationMillis)
-        : null,
-      eventDateTime: valueAtPath(result, OBJECT_PATHS.eventDateTime),
-      messageText: hasOwnPath(result, OBJECT_PATHS.messageText)
-        ? valueAtPath(result, OBJECT_PATHS.messageText)
-        : undefined
-    }, account, options, asOf, pageNumber, index + 1))
+    events: payload.results.map((result, index) => {
+      if (!hasOwnPath(result, OBJECT_PATHS.callDurationMillis) && !options.selectedColumns) {
+        capabilityFailure(pageNumber, "call-duration selection evidence is unavailable");
+      }
+      return normalizeEvent({
+        leadId: valueAtPath(result, OBJECT_PATHS.leadId),
+        leadType: valueAtPath(result, OBJECT_PATHS.leadType),
+        participantType: valueAtPath(result, OBJECT_PATHS.participantType),
+        conversationChannel: valueAtPath(result, OBJECT_PATHS.conversationChannel),
+        callDurationMillis: hasOwnPath(result, OBJECT_PATHS.callDurationMillis)
+          ? valueAtPath(result, OBJECT_PATHS.callDurationMillis)
+          : null,
+        eventDateTime: valueAtPath(result, OBJECT_PATHS.eventDateTime),
+        messageText: hasOwnPath(result, OBJECT_PATHS.messageText)
+          ? valueAtPath(result, OBJECT_PATHS.messageText)
+          : undefined
+      }, account, options, asOf, pageNumber, index + 1);
+    })
   };
+}
+
+// Collection evidence binds envelopes without customer columns. Returned identity
+// always takes precedence: a contradictory row is rejected even with a manifest.
+function validateCustomer(payload, envelope, account, source, pageNumber) {
+  const expected = account.customerId;
+  if (typeof expected !== "string" || !/^\d{10}$/.test(expected) ||
+      (source && source.customerId !== expected)) {
+    pageFailure(pageNumber, "customer evidence does not match configuration");
+  }
+  const container = envelope === "columns-data" ? columnsContainer(payload) : null;
+  const identityColumns = container?.columns.flatMap((name, index) =>
+    ["customer.id", "local_services_lead.resource_name", "localServicesLead.resourceName",
+      "local_services_lead_conversation.resource_name", "localServicesLeadConversation.resourceName"]
+      .includes(name) ? [{ name, index }] : []) ?? [];
+  const rows = container ? container.data : payload.results;
+  if (rows.length === 0 && !source) pageFailure(pageNumber, "customer evidence is unavailable");
+  for (const row of rows) {
+    const identities = container
+      ? identityColumns.map(({ name, index }) => [name === "customer.id", row[index]])
+      : [
+          ...(row?.customer && Object.hasOwn(row.customer, "id") ? [[true, row.customer.id]] : []),
+          ...[row?.localServicesLead, row?.localServicesLeadConversation].flatMap((resource) =>
+            resource && Object.hasOwn(resource, "resourceName") ? [[false, resource.resourceName]] : [])
+        ];
+    if (identities.length === 0 && !source) pageFailure(pageNumber, "customer evidence is unavailable");
+    for (const [isId, value] of identities) {
+      const customer = isId ? value : typeof value === "string"
+        ? /^customers\/(\d{10})\//.exec(value)?.[1] : undefined;
+      if (customer !== expected) pageFailure(pageNumber, "row customer does not match configuration");
+    }
+  }
 }
 
 function normalizeOptions(account, options) {
@@ -335,6 +380,9 @@ function normalizeOptions(account, options) {
 export async function ingestAccount(account, options = {}) {
   const { normalized, asOf } = normalizeOptions(account, options);
   const manifest = await loadManifest(account.inputManifest);
+  if (manifest.source?.selectedFields !== undefined) {
+    normalized.selectedColumns = resolveColumns(manifest.source.selectedFields);
+  }
   const events = [];
   const messageTextCapabilities = [];
   let envelope;
@@ -360,6 +408,7 @@ export async function ingestAccount(account, options = {}) {
     const page = detected === "columns-data"
       ? normalizeColumnsData(payload, account, normalized, asOf, pageNumber)
       : normalizeGoogleAdsResults(payload, account, normalized, asOf, pageNumber);
+    validateCustomer(payload, detected, account, manifest.source, pageNumber);
     events.push(...page.events);
     messageTextCapabilities.push(page.messageTextAvailable);
   }

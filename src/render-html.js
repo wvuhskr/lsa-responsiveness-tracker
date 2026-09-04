@@ -1,4 +1,5 @@
 import { assertReportModel } from "./report-model.js";
+import { formatDuration, formatContactTime } from "./format-time.js";
 
 export function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, (character) => ({
@@ -92,11 +93,11 @@ function unansweredTable(account, privacy) {
   if (account.recentUnanswered.length === 0) {
     return '<p class="empty-state">No recent unanswered messages.</p>';
   }
-  const headings = ["Account", "First contact (epoch nanoseconds)"];
+  const headings = ["Account", `First contact (${account.timeZone})`];
   if (privacy.includeLeadIds) headings.push("Lead ID");
   if (privacy.includeMessageText) headings.push("Message snippet");
   const rows = account.recentUnanswered.map((record) => {
-    const cells = [account.name, record.firstContactEpochNanoseconds];
+    const cells = [account.name, formatContactTime(record.firstContactEpochNanoseconds, account.timeZone)];
     if (privacy.includeLeadIds) cells.push(record.leadId);
     if (privacy.includeMessageText) cells.push(record.messageText ?? "");
     return `<tr>${cells.map((cell) => `<td>${escapeHtml(cell)}</td>`).join("")}</tr>`;
@@ -152,9 +153,7 @@ function accountSection(account, privacy) {
   const noActivity = account.counts.totalEligible === 0
     ? '<p class="empty-state prominent">No eligible activity</p>'
     : "";
-  const median = account.replySpeed.medianNanoseconds === null
-    ? "No data"
-    : `${account.replySpeed.medianNanoseconds} ns`;
+  const median = formatDuration(account.replySpeed.medianNanoseconds);
   return [
     `<section class="account" aria-labelledby="account-${escapeHtml(account.key)}">`,
     `<div class="account-heading"><div><h2 id="account-${escapeHtml(account.key)}">${escapeHtml(account.name)}</h2>`,

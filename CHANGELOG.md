@@ -2,9 +2,15 @@
 
 All notable public changes to LSA Responsiveness Tracker are recorded here.
 
-## [Unreleased]
+## [1.0.1] - 2026-09-04
 
-No public changes yet.
+- Add a prominent README notice identifying the project as unofficial and independent, with no Google affiliation, endorsement, or sponsorship.
+- Bind imported rows to the configured customer using returned identities and private request-source evidence; reject missing or contradictory customer evidence.
+- Accept nonnegative decimal-string call durations within the safe integer range.
+- Add `probe --config` to validate whole collections, including consumed pagination chains, without producing reports.
+- Require field-selection evidence for empty native results and omitted call durations; accept verified no-activity periods without fabricating metrics.
+- Display readable reply durations and account-local first-contact dates in HTML while retaining exact machine-readable values.
+- Update the Agent Skill and manifest contract. Existing manifests without returned row identities require source evidence from retained query records or a fresh collection.
 
 ## [1.0.0] - 2026-09-01
 

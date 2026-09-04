@@ -55,6 +55,10 @@ function validateGoogleAdsResults(results, requireMessageText) {
     GOOGLE_ADS_REQUIRED_PATHS.some((path) => !hasOwnPath(result, path)))) {
     throw new CapabilityError(GOOGLE_ADS_CAPABILITY_ERROR);
   }
+  if (results.some((result) => !hasOwnPath(result,
+    ["localServicesLeadConversation", "phoneCallDetails", "callDurationMillis"]))) {
+    throw new CapabilityError(GOOGLE_ADS_CAPABILITY_ERROR);
+  }
 
   const messageTextAvailable = results.some((result) =>
     hasOwnPath(result, GOOGLE_ADS_MESSAGE_TEXT_PATH));

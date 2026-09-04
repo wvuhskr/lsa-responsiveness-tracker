@@ -54,7 +54,7 @@ An explicit root or supported `result` wrapper error, `isError: true`, `partial:
 
 ## Completion manifest
 
-Create a schema-version 1 manifest beside its response files. Choose exactly one completion method:
+Create a schema-version 1 manifest beside its response files. Record `source.customerId` from the actual query request (not merely the desired report label) and `source.selectedFields` as the exact list of GAQL fields selected. This evidence stays private. Choose exactly one completion method:
 
 - `single-page-no-continuation`: exactly one page with `requestToken: null` and `nextPageToken: null`.
 - `all-page-tokens-consumed`: one or more pages whose first request token is null, every nonfinal `nextPageToken` exactly equals the following page's `requestToken`, no continuation token repeats, and the final `nextPageToken` is null.
@@ -72,6 +72,7 @@ Example token-chain shape:
 {
   "schemaVersion": 1,
   "format": "auto",
+  "source": { "customerId": "YOUR_CUSTOMER_ID" },
   "completion": { "method": "all-page-tokens-consumed" },
   "pages": [
     { "path": "page-1.json", "requestToken": null, "nextPageToken": "opaque-page-token" },
@@ -80,4 +81,12 @@ Example token-chain shape:
 }
 ```
 
-Treat page tokens as private even when the manifest itself contains no lead rows.
+Replace `YOUR_CUSTOMER_ID` with the actual query customer in private storage. Treat page tokens as private even when the manifest itself contains no lead rows.
+
+## Customer and field-selection evidence
+
+`source` accepts only `customerId` and optional `selectedFields`. For native `results`, always include all required query fields in `selectedFields`; include message text only when actually selected after opt-in. This lets the CLI distinguish unselected fields from legitimate protobuf omissions and establish capability for a completed empty period. An empty native result requires both customer and complete selection evidence. A missing duration without selection evidence fails rather than being labeled a verified capability. Decimal-string int64 call durations are supported, subject to nonnegative safe-integer bounds.
+
+Every returned `customer.id` or Local Services resource-name customer is compared with the configured customer. Contradictions fail even when the manifest claims a match. Columns envelopes may use snake-case or lower-camel-case resource-name paths. Without manifest source evidence, every row must carry a matching customer identity; empty pages require manifest evidence. Prefer selecting a customer identity or retaining returned resource names so accidental cross-account data can be detected directly.
+
+Manifest evidence is the collector's assertion about the real request, not cryptographic proof. Do not reconstruct it by guessing after files have lost their provenance. Old manifests without source evidence must be re-collected or updated from retained request records. Validate the completed collection using `probe --config PATH`, which checks token chains and source evidence without writing outputs. Isolated `probe --input` remains a structural check and rejects continuation tokens.

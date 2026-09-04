@@ -37,6 +37,7 @@ const USAGE = [
   "Commands:",
   "  demo --output-dir PATH [--replace-demo]",
   "  probe --input PATH [--input PATH ...] [--format auto|columns-data|google-ads-results]",
+  "  probe --config PATH",
   "  report --config PATH --output-dir PATH"
 ].join("\n");
 const FORMATS = new Set(["auto", "columns-data", "google-ads-results"]);
@@ -102,11 +103,16 @@ function parseDemo(argv) {
 
 function parseProbe(argv) {
   const inputs = [];
+  let configPath;
   let format = "auto";
   let sawFormat = false;
   for (let index = 0; index < argv.length; index += 1) {
     const option = argv[index];
-    if (option === "--input") {
+    if (option === "--config") {
+      if (configPath !== undefined) usage();
+      configPath = optionValue(argv, index);
+      index += 1;
+    } else if (option === "--input") {
       inputs.push(optionValue(argv, index));
       index += 1;
     } else if (option === "--format") {
@@ -119,8 +125,10 @@ function parseProbe(argv) {
       usage();
     }
   }
-  if (inputs.length === 0) usage();
-  return { inputs, format };
+  if (configPath !== undefined) {
+    if (inputs.length || sawFormat) usage();
+  } else if (inputs.length === 0) usage();
+  return { inputs, format, configPath };
 }
 
 function parseReport(argv) {
@@ -257,6 +265,19 @@ function capabilityTable(capabilities) {
 
 async function runProbe(options, io) {
   const capabilities = [];
+  if (options.configPath !== undefined) {
+    const config = await loadConfig(options.configPath, process.cwd());
+    for (const account of config.accounts) {
+      const result = await ingestAccount(account, {
+        asOf: config.asOf,
+        includeMessageText: config.privacy.includeMessageText,
+        disambiguation: config.timestamps.dstDisambiguation
+      });
+      capabilities.push(capabilityFromIngestion(result.capability).capability);
+    }
+    io.out(capabilityTable(capabilities));
+    return;
+  }
   for (const inputPath of options.inputs) {
     const payload = await readProbePayload(inputPath);
     let capability;
@@ -702,6 +723,7 @@ async function runDemo(options, io) {
     await writePrivateDemoFile(manifestPath, `${JSON.stringify({
       schemaVersion: 1,
       format: "columns-data",
+      source: { customerId: DEMO_ACCOUNT.customerId },
       completion: {
         method: "connector-complete-saved-result",
         savedResultWasComplete: true

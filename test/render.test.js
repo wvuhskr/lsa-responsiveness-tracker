@@ -453,7 +453,7 @@ test("HTML renders fixed diagnostics, buckets, recent unanswered, and completion
   ]) {
     assert.match(html, new RegExp(expected, "i"));
   }
-  assert.match(html, /3900000000000 ns/);
+  assert.match(html, /1h 5m 0s/);
   assert.match(html, /SYNTHETIC FOLLOW UP/);
 });
 

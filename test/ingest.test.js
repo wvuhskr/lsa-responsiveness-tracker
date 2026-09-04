@@ -38,6 +38,7 @@ async function writeInput({
   await writeFile(manifestPath, JSON.stringify({
     schemaVersion: 1,
     format,
+    source: { customerId: "1000000001" },
     completion,
     pages: [{ path: "page.json" }]
   }));
@@ -70,7 +71,8 @@ async function writePagedInput({
     schemaVersion: 1,
     format,
     completion,
-    pages: normalizedPages
+    pages: normalizedPages,
+    source: { customerId: "1000000001" }
   }));
   return accountFor(path.join(root, "manifest.json"));
 }
@@ -358,8 +360,8 @@ test("retains an unknown string lead type in normalized uppercase form", async (
   assert.equal(input.events[0].leadType, "SYNTHETIC_NEW_LEAD_TYPE");
 });
 
-test("rejects negative, fractional, string, and unsafe call durations", async () => {
-  for (const duration of [-1, 1.5, "1000", 9_007_199_254_740_992]) {
+test("rejects negative, fractional, malformed-string, and unsafe call durations", async () => {
+  for (const duration of [-1, 1.5, "1.5", 9_007_199_254_740_992]) {
     const row = validRow();
     row[4] = duration;
     const account = await writeInput({ payload: columnsPayload(row) });
@@ -367,7 +369,7 @@ test("rejects negative, fractional, string, and unsafe call durations", async ()
   }
 });
 
-test("normalizes an absent Google Ads object call duration to null", async () => {
+test("rejects an absent Google Ads duration without selection evidence", async () => {
   const payload = JSON.parse(await readFile(
     path.join(syntheticRoot, "google-ads-results.json"),
     "utf8"
@@ -375,13 +377,11 @@ test("normalizes an absent Google Ads object call duration to null", async () =>
   delete payload.results[0].localServicesLeadConversation.phoneCallDetails;
   const account = await writeInput({ payload, format: "google-ads-results" });
 
-  const input = await ingestAccount(account, {
+  await assert.rejects(ingestAccount(account, {
     includeMessageText: false,
     asOf: AS_OF,
     disambiguation: "reject"
-  });
-
-  assert.equal(input.events[0].callDurationMillis, null);
+  }), CapabilityError);
 });
 
 test("accepts present null and zero Google Ads object call durations", async () => {
@@ -411,7 +411,7 @@ test("rejects invalid present Google Ads object call durations", async () => {
     "utf8"
   ));
 
-  for (const duration of [-1, 1.5, "1000", 9_007_199_254_740_992]) {
+  for (const duration of [-1, 1.5, "1.5", 9_007_199_254_740_992]) {
     const payload = structuredClone(base);
     payload.results = [payload.results[0]];
     payload.results[0].localServicesLeadConversation.phoneCallDetails
@@ -611,6 +611,7 @@ test("rejects mixed page envelopes when the manifest format is auto", async () =
     schemaVersion: 1,
     format: "auto",
     completion: { method: "all-page-tokens-consumed" },
+    source: { customerId: "1000000001" },
     pages: [
       { path: "one.json", requestToken: null, nextPageToken: "SYNTHETIC-MIXED-TOKEN" },
       { path: "two.json", requestToken: "SYNTHETIC-MIXED-TOKEN", nextPageToken: null }

@@ -82,7 +82,7 @@ test("skill preserves the required fail-closed workflow ordering", async () => {
     /access probe/i,
     /field probe/i,
     /(?:drain|complete saved result)/i,
-    /\bprobe\b[^\n]*CLI/i,
+    /probe --config PATH/,
     /\breport\b[^\n]*CLI/i
   ]);
   assert.match(source, /never calculate[^.]*fallback/i);
@@ -155,7 +155,7 @@ test("README, examples, and package metadata advertise only real release behavio
   assert.match(readme, /aggregation-only[^.]*unsupported/i);
   assert.match(readme, /Node\.js[^\n]*20/i);
   assert.match(readme, /node \.\/bin\/lsa-responsiveness\.js demo --output-dir/);
-  assert.match(readme, /node \.\/bin\/lsa-responsiveness\.js probe --input/);
+  assert.match(readme, /node \.\/bin\/lsa-responsiveness\.js probe --config/);
   assert.match(readme, /node \.\/bin\/lsa-responsiveness\.js report --config/);
   assert.match(readme, /node \.\/scripts\/install-skill\.mjs install --platform/);
   assert.match(readme, /Performance Max[^.]*pay-per-lead/i);
@@ -168,7 +168,7 @@ test("README, examples, and package metadata advertise only real release behavio
   assert.match(readme, /Node 24[^.]*Node 20[^.]*CI/i);
   assert.match(readme, /Scheduling[^.]*not included/i);
   assert.match(readme, /github\.com\/wvuhskr\/lsa-responsiveness-tracker/);
-  assert.match(readme, /Current release[^\n]*1\.0\.0/);
+  assert.match(readme, /Current release[^\n]*1\.0\.1/);
   assert.match(readme, /\[SECURITY\.md\]\(SECURITY\.md\)/);
   assert.match(readme, /\[CHANGELOG\.md\]\(CHANGELOG\.md\)/);
   assert.doesNotMatch(readme, /publication[^.]*deferred/i);
